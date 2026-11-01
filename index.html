@@ -1,22 +1,581 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BPCAB - Bakery and Pastry Chefs Assembly Of Bangladesh | Est. 2019</title>
-    <meta name="description" content="Official website of Bakery & Pastry Chefs Assembly Of Bangladesh (BPCAB). Promoting excellence in artisanal baking, French pastry, cake artistry and culinary education in Bangladesh." />
-    <meta property="og:title" content="BPCAB - Bakery and Pastry Chefs Assembly Of Bangladesh" />
-    <meta property="og:description" content="Uniting culinary pastry chefs, masterclasses, certifications and artisanal baking excellence in Bangladesh since 2019." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/jpeg" href="/logo.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPCAB - Bakery and Pastry Chefs Assembly Of Bangladesh | Est. 2019</title>
+  <meta name="description" content="Official website of Bakery & Pastry Chefs Assembly Of Bangladesh (BPCAB). Promoting excellence in artisanal baking, French pastry, cake artistry and culinary education in Bangladesh since 2019.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-[#0b0d11] text-slate-100 antialiased selection:bg-amber-400 selection:text-slate-950 flex flex-col min-h-screen justify-between">
 
+  <!-- Top Gold Ribbon -->
+  <div class="bg-gradient-to-r from-amber-700 via-amber-500 to-amber-700 text-slate-950 text-xs py-2 px-4 font-extrabold border-b border-amber-300/40 shadow-sm text-center">
+    <div class="max-w-6xl mx-auto flex items-center justify-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-slate-950 animate-ping"></span>
+      <span id="txt-ribbon" class="tracking-wider uppercase text-[11px] sm:text-xs font-bold">
+        National Assembly of Professional Pastry Chefs &amp; Bakers · Est. 2019
+      </span>
+    </div>
+  </div>
+
+  <!-- Header with Navigation and Three-Dot Menu (⋮) -->
+  <header class="sticky top-0 z-40 bg-[#12151c]/95 backdrop-blur-md border-b border-white/10 shadow-xl">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-3 group text-left">
+        <div class="w-12 h-12 rounded-full bg-black border-2 border-amber-400 shadow-md flex items-center justify-center p-1 shrink-0 overflow-hidden">
+          <img src="logo.png" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=100&auto=format&fit=crop&q=80'" alt="BPCAB Logo" class="w-full h-full object-contain rounded-full">
+        </div>
+        <div>
+          <span class="font-extrabold text-xl sm:text-2xl tracking-wider text-white font-['Montserrat'] flex items-center gap-1">
+            BPCAB<span class="text-amber-400">.</span>
+          </span>
+          <span id="txt-brand-sub" class="block text-[10px] sm:text-[11px] font-semibold text-amber-300/90 tracking-wider uppercase -mt-1 line-clamp-1">
+            Bakery &amp; Pastry Chefs Assembly Of Bangladesh
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Tabs -->
+      <nav class="hidden lg:flex items-center gap-1 text-xs font-bold text-slate-300 bg-white/5 p-1 rounded-2xl border border-white/10">
+        <button onclick="switchPage('home')" id="tab-home" class="nav-tab px-3.5 py-2 rounded-xl transition bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold shadow">Home</button>
+        <button onclick="switchPage('about')" id="tab-about" class="nav-tab px-3.5 py-2 rounded-xl transition hover:text-white hover:bg-white/5">About Us</button>
+        <button onclick="switchPage('programs')" id="tab-programs" class="nav-tab px-3.5 py-2 rounded-xl transition hover:text-white hover:bg-white/5">Masterclasses</button>
+        <button onclick="switchPage('membership')" id="tab-membership" class="nav-tab px-3.5 py-2 rounded-xl transition hover:text-white hover:bg-white/5">Membership</button>
+        <button onclick="switchPage('gallery')" id="tab-gallery" class="nav-tab px-3.5 py-2 rounded-xl transition hover:text-white hover:bg-white/5">Showcase</button>
+        <button onclick="switchPage('contact')" id="tab-contact" class="nav-tab px-3.5 py-2 rounded-xl transition hover:text-white hover:bg-white/5">Contact</button>
+      </nav>
+
+      <!-- Right Action & Three-Dot Menu (⋮) -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="switchPage('membership')" id="btn-header-apply" class="hidden sm:inline-flex px-4 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 text-slate-950 shadow transition">
+          Apply Member
+        </button>
+
+        <button onclick="toggleMenu()" class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition flex items-center gap-1.5" title="Menu">
+          <span class="text-lg leading-none font-extrabold text-amber-400">⋮</span>
+          <span id="txt-menu-label" class="text-xs font-extrabold hidden sm:inline">Menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- THREE-DOT SLIDE OVER DRAWER -->
+  <div id="drawerMenu" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex justify-end">
+    <div class="w-full max-w-sm bg-[#13161c] h-full p-6 shadow-2xl border-l border-white/10 flex flex-col justify-between overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-white/10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-black border border-amber-400 overflow-hidden">
+              <img src="logo.png" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=100'" alt="Logo" class="w-full h-full object-cover">
+            </div>
+            <span class="font-extrabold text-sm text-white font-['Montserrat']">BPCAB MENU</span>
+          </div>
+          <button onclick="toggleMenu()" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10">✕</button>
+        </div>
+
+        <!-- Language Selector inside Three-Dot Menu (Default: English) -->
+        <div class="py-4 border-b border-white/10">
+          <span class="text-[10px] uppercase font-extrabold text-amber-400 tracking-widest block mb-2 px-1 flex items-center gap-1.5">
+            🌐 <span id="txt-drawer-lang-title">Select Language / ভাষা</span>
+          </span>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="langBtnEn" onclick="setLanguage('en')" class="py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border bg-amber-400 text-slate-950 border-amber-300 font-extrabold shadow-md">
+              English (Default)
+            </button>
+            <button id="langBtnBn" onclick="setLanguage('bn')" class="py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border bg-white/5 hover:bg-white/10 text-slate-300 border-white/10">
+              বাংলা (Bengali)
+            </button>
+          </div>
+        </div>
+
+        <!-- Page Links Navigation -->
+        <div class="py-5 space-y-2">
+          <span id="txt-drawer-nav-title" class="text-[10px] font-extrabold text-amber-400 uppercase tracking-widest block mb-2 px-3">
+            Pages &amp; Sections
+          </span>
+          <button onclick="switchPage('home'); toggleMenu();" class="w-full text-left p-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-between">
+            <span id="nav-d-home">🏠 Home</span> <span>→</span>
+          </button>
+          <button onclick="switchPage('about'); toggleMenu();" class="w-full text-left p-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-between">
+            <span id="nav-d-about">ℹ️ About Us</span> <span>→</span>
+          </button>
+          <button onclick="switchPage('programs'); toggleMenu();" class="w-full text-left p-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-between">
+            <span id="nav-d-programs">📚 Masterclasses &amp; Academy</span> <span>→</span>
+          </button>
+          <button onclick="switchPage('membership'); toggleMenu();" class="w-full text-left p-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-between">
+            <span id="nav-d-membership">📜 Membership Registration</span> <span>→</span>
+          </button>
+          <button onclick="switchPage('gallery'); toggleMenu();" class="w-full text-left p-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-between">
+            <span id="nav-d-gallery">🖼️ Pastry Art Showcase</span> <span>→</span>
+          </button>
+          <button onclick="switchPage('contact'); toggleMenu();" class="w-full text-left p-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-amber-400 hover:text-slate-950 transition flex items-center justify-between">
+            <span id="nav-d-contact">📍 Secretariat &amp; Contact</span> <span>→</span>
+          </button>
+        </div>
+      </div>
+      <div class="pt-4 border-t border-white/10 text-center text-xs text-slate-400">
+        <p class="font-bold text-slate-300">Hotline: +880 1711-234567</p>
+        <p class="text-[11px] text-slate-500 mt-1">Gulshan-2, Dhaka 1212, Bangladesh</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+  <main class="flex-1">
+
+    <!-- PAGE 1: HOME -->
+    <div id="page-home" class="page-section active">
+      <section class="relative overflow-hidden py-16 sm:py-24 px-4 border-b border-white/10">
+        <div class="absolute inset-0 z-0">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&auto=format&fit=crop&q=80" alt="Bakery Background" class="w-full h-full object-cover filter brightness-25">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0b0d11] via-[#0b0d11]/80 to-transparent"></div>
+        </div>
+        <div class="max-w-6xl mx-auto relative z-10">
+          <div class="max-w-2xl text-center sm:text-left">
+            <span class="inline-block bg-amber-400/15 border border-amber-400/30 text-amber-300 text-xs font-extrabold px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-5">
+              ✨ ESTABLISHED 2019 · OFFICIAL NATIONAL GUILD
+            </span>
+            <h1 id="hero-title" class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-5 leading-tight">
+              Elevating Bangladesh's <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500">Baking &amp; Pastry</span> Artistry
+            </h1>
+            <p id="hero-desc" class="text-sm sm:text-base text-slate-300 mb-8 leading-relaxed">
+              Since 2019, BPCAB is the apex professional body uniting executive five-star pastry chefs, artisan sourdough bakers, cafe entrepreneurs, and home baking pioneers across Bangladesh.
+            </p>
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3.5">
+              <button onclick="switchPage('membership')" id="hero-btn-apply" class="px-6 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 shadow-xl transition">
+                Apply for Membership
+              </button>
+              <button onclick="switchPage('programs')" id="hero-btn-master" class="px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-white/10 hover:bg-white/20 border border-white/20 transition">
+                Explore Masterclasses
+              </button>
+              <button onclick="switchPage('about')" id="hero-btn-about" class="px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm text-amber-300 hover:text-white transition">
+                About BPCAB →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- President Address Box -->
+      <section class="py-14 bg-[#13161c] border-b border-white/10 px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="bg-[#181d26] rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col md:flex-row items-center gap-6">
+            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=400&auto=format&fit=crop&q=80" alt="President" class="w-24 h-24 rounded-2xl object-cover border-2 border-amber-400 shrink-0">
+            <div>
+              <span id="txt-pres-tag" class="text-amber-400 text-xs font-bold uppercase tracking-wider block mb-1">President's Message</span>
+              <h3 id="txt-pres-quote" class="text-lg sm:text-xl font-bold text-white mb-2">“Baking is not merely a profession; it is precision, science, and a national identity.”</h3>
+              <p id="txt-pres-body" class="text-xs text-slate-300 leading-relaxed mb-3">In 2019, we laid the foundation of BPCAB with a vision to elevate Bangladesh's baking professionals to global international standards. Today we stand united for quality, hygiene, and pastry excellence.</p>
+              <div class="text-xs font-bold text-amber-300">Chef Kazi Mamunur Rashid · President, BPCAB</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PAGE 2: ABOUT US -->
+    <div id="page-about" class="page-section py-14 px-4 max-w-5xl mx-auto">
+      <div class="border-b border-white/10 pb-6 mb-8">
+        <span id="about-tag" class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-1">History &amp; Vision</span>
+        <h2 id="about-title" class="text-3xl sm:text-4xl font-extrabold text-white">Our Heritage &amp; Mission</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-[#14171f] p-6 rounded-2xl border border-white/10">
+          <h3 id="about-v-title" class="text-lg font-bold text-amber-400 mb-2">Our Vision</h3>
+          <p id="about-v-desc" class="text-xs text-slate-300 leading-relaxed">To position Bangladesh as a recognized hub of premium culinary artistry and bakery science, empowering bakers with international certifications and certified hygiene practices.</p>
+        </div>
+        <div class="bg-[#14171f] p-6 rounded-2xl border border-white/10">
+          <h3 id="about-m-title" class="text-lg font-bold text-amber-400 mb-2">Our Mission</h3>
+          <p id="about-m-desc" class="text-xs text-slate-300 leading-relaxed">Foster brotherhood and collaboration among executive chefs, artisan bakers, and passionate home bakers through hands-on masterclasses and supply access.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3: PROGRAMS -->
+    <div id="page-programs" class="page-section py-14 px-4 max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span id="prog-tag" class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-1">Academy &amp; Workshops</span>
+        <h2 id="prog-title" class="text-3xl sm:text-4xl font-extrabold text-white">BPCAB Certified Masterclasses</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-[#14171e] rounded-3xl overflow-hidden border border-white/10 shadow-xl">
+          <div class="h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&auto=format&fit=crop&q=80" alt="Croissant" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <span class="text-amber-400 text-xs font-bold uppercase block mb-1">3 Days Hands-on</span>
+            <h3 class="text-xl font-bold text-white mb-2">French Viennoiserie &amp; Croissant Art</h3>
+            <p class="text-xs text-slate-300 mb-4">Butter lamination dynamics, honeycomb open crumb structure, sourdough brioche, and classic eclairs.</p>
+            <button onclick="switchPage('membership')" class="w-full py-3 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs">Enroll Today</button>
+          </div>
+        </div>
+
+        <div class="bg-[#14171e] rounded-3xl overflow-hidden border border-white/10 shadow-xl">
+          <div class="h-56 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=800&auto=format&fit=crop&q=80" alt="Cake" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <span class="text-amber-400 text-xs font-bold uppercase block mb-1">4 Days Masterclass</span>
+            <h3 class="text-xl font-bold text-white mb-2">Royal Wedding Cakes &amp; Sugar Flowers</h3>
+            <p class="text-xs text-slate-300 mb-4">Multi-tiered engineering, ganache razor-sharp edges, botanical gum-paste florals, and safe transport protocols.</p>
+            <button onclick="switchPage('membership')" class="w-full py-3 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs">Enroll Today</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 4: MEMBERSHIP -->
+    <div id="page-membership" class="page-section py-14 px-4 max-w-4xl mx-auto">
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <span id="mem-tag" class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-1">Online Application</span>
+        <h2 id="mem-title" class="text-3xl font-extrabold text-white">Join the National Assembly</h2>
+      </div>
+      <div class="bg-[#181c25] rounded-3xl p-6 sm:p-8 border border-amber-400/40 shadow-xl">
+        <form onsubmit="event.preventDefault(); alert(currentLang === 'bn' ? 'ধন্যবাদ! আপনার আবেদন সফলভাবে গৃহীত হয়েছে।' : 'Thank you! Your application has been received. Our secretariat will contact you.');" class="space-y-4 text-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1" id="lbl-name">Full Name *</label>
+              <input type="text" required placeholder="Chef Name" class="w-full px-4 py-2.5 rounded-xl bg-[#12141a] border border-white/15 text-white">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 mb-1" id="lbl-phone">Mobile Number *</label>
+              <input type="tel" required placeholder="01700-000000" class="w-full px-4 py-2.5 rounded-xl bg-[#12141a] border border-white/15 text-white">
+            </div>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1" id="lbl-cat">Membership Category</label>
+            <select class="w-full px-4 py-2.5 rounded-xl bg-[#12141a] border border-white/15 text-white">
+              <option>Executive Pastry Chef (৳3,000 / year)</option>
+              <option selected>Home Baker &amp; Cake Artist (৳2,000 / year)</option>
+              <option>Apprentice &amp; Student (৳1,200 / year)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1" id="lbl-bakery">Bakery / Business Name</label>
+            <input type="text" placeholder="e.g. Dreams Artisan Bakery" class="w-full px-4 py-2.5 rounded-xl bg-[#12141a] border border-white/15 text-white">
+          </div>
+          <button type="submit" id="btn-submit-app" class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold text-xs shadow-xl">
+            Submit Application
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PAGE 5: GALLERY (Dynamic from gallery.json and localStorage) -->
+    <div id="page-gallery" class="page-section py-14 px-4 max-w-6xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span id="gal-tag" class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-1">Artisan Creations</span>
+        <h2 id="gal-title" class="text-3xl font-extrabold text-white">BPCAB Pastry Showcase</h2>
+      </div>
+      <div id="publicGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered dynamically from gallery.json or localStorage -->
+      </div>
+    </div>
+
+    <!-- PAGE 6: CONTACT -->
+    <div id="page-contact" class="page-section py-14 px-4 max-w-4xl mx-auto">
+      <div class="text-center max-w-xl mx-auto mb-8">
+        <span id="con-tag" class="text-xs uppercase font-extrabold tracking-widest text-amber-400 block mb-1">Get in Touch</span>
+        <h2 id="con-title" class="text-3xl font-extrabold text-white">Central Secretariat</h2>
+      </div>
+      <div class="bg-[#14171e] p-8 rounded-3xl border border-white/10 text-xs sm:text-sm space-y-4 text-center sm:text-left">
+        <p><strong id="lbl-hq">Headquarters:</strong> Gulshan-2, Dhaka 1212, Bangladesh</p>
+        <p><strong id="lbl-hotline">Hotline:</strong> +880 1711-234567</p>
+        <p><strong id="lbl-email">Official Email:</strong> info@bpcab.org.bd</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-black text-slate-500 text-xs py-10 px-4 border-t border-white/10 text-center">
+    <div class="max-w-6xl mx-auto space-y-2">
+      <div class="text-white font-extrabold text-sm sm:text-base">BPCAB - Bakery and Pastry Chefs Assembly Of Bangladesh</div>
+      <p class="text-slate-400 text-xs">EST. 2019 · Gulshan-2, Dhaka 1212, Bangladesh · Hotline: +880 1711-234567</p>
+      <p class="text-[11px] text-slate-600">© 2019 - 2026 BPCAB. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Page Navigation, Language & Dynamic Gallery JavaScript -->
+  <script>
+    let currentLang = 'en';
+
+    const translations = {
+      en: {
+        ribbon: 'National Assembly of Professional Pastry Chefs & Bakers · Est. 2019',
+        brandSub: 'Bakery & Pastry Chefs Assembly Of Bangladesh',
+        tabHome: 'Home',
+        tabAbout: 'About Us',
+        tabPrograms: 'Masterclasses',
+        tabMembership: 'Membership',
+        tabGallery: 'Showcase',
+        tabContact: 'Contact',
+        applyBtn: 'Apply Member',
+        menuLabel: 'Menu',
+        drawerLangTitle: 'Select Language / ভাষা',
+        drawerNavTitle: 'Pages & Sections',
+        dHome: '🏠 Home',
+        dAbout: 'ℹ️ About Us',
+        dPrograms: '📚 Masterclasses & Academy',
+        dMembership: '📜 Membership Registration',
+        dGallery: '🖼️ Pastry Art Showcase',
+        dContact: '📍 Secretariat & Contact',
+        heroTitle: 'Elevating Bangladesh\\'s <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500">Baking &amp; Pastry</span> Artistry',
+        heroDesc: 'Since 2019, BPCAB is the apex professional body uniting executive five-star pastry chefs, artisan sourdough bakers, cafe entrepreneurs, and home baking pioneers across Bangladesh.',
+        heroApply: 'Apply for Membership',
+        heroMaster: 'Explore Masterclasses',
+        heroAbout: 'About BPCAB →',
+        presTag: "President's Message",
+        presQuote: '“Baking is not merely a profession; it is precision, science, and a national identity.”',
+        presBody: 'In 2019, we laid the foundation of BPCAB with a vision to elevate Bangladesh\\'s baking professionals to global international standards. Today we stand united for quality, hygiene, and pastry excellence.',
+        aboutTag: 'History & Vision',
+        aboutTitle: 'Our Heritage & Mission',
+        aboutVTitle: 'Our Vision',
+        aboutVDesc: 'To position Bangladesh as a recognized hub of premium culinary artistry and bakery science, empowering bakers with international certifications and certified hygiene practices.',
+        aboutMTitle: 'Our Mission',
+        aboutMDesc: 'Foster brotherhood and collaboration among executive chefs, artisan bakers, and passionate home bakers through hands-on masterclasses and supply access.',
+        progTag: 'Academy & Workshops',
+        progTitle: 'BPCAB Certified Masterclasses',
+        memTag: 'Online Application',
+        memTitle: 'Join the National Assembly',
+        lblName: 'Full Name *',
+        lblPhone: 'Mobile Number *',
+        lblCat: 'Membership Category',
+        lblBakery: 'Bakery / Business Name',
+        submitApp: 'Submit Application',
+        galTag: 'Artisan Creations',
+        galTitle: 'BPCAB Pastry Showcase',
+        conTag: 'Get in Touch',
+        conTitle: 'Central Secretariat',
+        lblHq: 'Headquarters:',
+        lblHotline: 'Hotline:',
+        lblEmail: 'Official Email:'
+      },
+      bn: {
+        ribbon: 'জাতীয় বেকারি ও প্যাস্ট্রি শেফ সমাবেশ ২০১৯ থেকে সক্রিয় · EST. 2019',
+        brandSub: 'বেকারি অ্যান্ড প্যাস্ট্রি শেফস অ্যাসেম্বলি অব বাংলাদেশ',
+        tabHome: 'হোমপেজ',
+        tabAbout: 'আমাদের সম্পর্কে',
+        tabPrograms: 'মাস্টারক্লাস',
+        tabMembership: 'সদস্যপদ',
+        tabGallery: 'গ্যালারি',
+        tabContact: 'যোগাযোগ',
+        applyBtn: 'সদস্যপদ আবেদন',
+        menuLabel: 'মেন্যু',
+        drawerLangTitle: 'ভাষা নির্বাচন / Language',
+        drawerNavTitle: 'পেজ নির্বাচন করুন',
+        dHome: '🏠 হোমপেজ (Home)',
+        dAbout: 'ℹ️ আমাদের সম্পর্কে (About Us)',
+        dPrograms: '📚 মাস্টারক্লাস ও একাডেমি',
+        dMembership: '📜 সদস্যপদ নিবন্ধন ফরম',
+        dGallery: '🖼️ প্যাস্ট্রি আর্ট গ্যালারি',
+        dContact: '📍 যোগাযোগ ও সচিবালয়',
+        heroTitle: 'বাংলাদেশের বেকারি ও প্যাস্ট্রি শিল্পের <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500">জাতীয় গৌরব</span>',
+        heroDesc: '২০১৯ সাল থেকে বাংলাদেশের ৫-তারকা হোটেল শেফ, হোম বেকার ও ক্যাফে উদ্যোক্তাদের পেশাগত দক্ষতা বৃদ্ধি, আন্তর্জাতিক সার্টিফিকেশন ও মানসম্মত কালিনারি শিল্পের শীর্ষ সংগঠন।',
+        heroApply: 'সদস্যপদ ফরম পূরণ করুন',
+        heroMaster: 'মাস্টারক্লাস দেখুন',
+        heroAbout: 'আমাদের সম্পর্কে →',
+        presTag: 'সভাপতির বাণী',
+        presQuote: '“বেকিং শুধুমাত্র পেশা নয়, এটি একটি সূক্ষ্ম শিল্প ও জাতীয় পরিচয়”',
+        presBody: '২০১৯ সালে আমরা স্বপ্ন দেখেছিলাম বাংলাদেশের প্রতিভাবান শেফ ও হোম বেকারদের একটি একক আন্তর্জাতিক মানে পৌঁছে দেওয়ার। আজ বিপিসিএবি দেশের শীর্ষ পাঁচতারা হোটেল থেকে শুরু করে ক্ষুদ্র হোম বেকারদের পাশে দাঁড়িয়েছে।',
+        aboutTag: 'ইতিহাস ও ঐতিহ্য',
+        aboutTitle: 'আমাদের লক্ষ্য ও সংবিধান',
+        aboutVTitle: 'আমাদের ভিশন',
+        aboutVDesc: 'বাংলাদেশের প্যাস্ট্রি ও বেকিং শিল্পকে আন্তর্জাতিক মানে উন্নীত করা, যাতে বিশ্বমঞ্চে বাংলাদেশ সম্মানের সাথে স্থান অধিকার করতে পারে এবং দেশের প্রতিটি নাগরিক নিরাপদ ও স্বাস্থ্যসম্মত বেকারি পণ্য উপভোগ করতে পারে।',
+        aboutMTitle: 'আমাদের মিশন',
+        aboutMDesc: 'পেশাদার শেফ ও হোম বেকারদের ঐক্য, বিশ্বমানের ড্রাই বাটার ও চকলেট উপকরণের সহজলভ্যতা এবং খাদ্য নিরাপত্তা ও হাইজিন সনদপত্র প্রদান।',
+        progTag: 'কোর্স ও ওয়ার্কশপ',
+        progTitle: 'বিপিসিএবি এক্সক্লুসিভ মাস্টারক্লাস',
+        memTag: 'অনলাইন ফরম',
+        memTitle: 'বিপিসিএবি সদস্যপদের আবেদন',
+        lblName: 'আপনার নাম *',
+        lblPhone: 'মোবাইল নম্বর *',
+        lblCat: 'ক্যাটাগরি',
+        lblBakery: 'বেকারি বা প্রতিষ্ঠানের নাম',
+        submitApp: 'আবেদন সম্পন্ন করুন',
+        galTag: 'আর্টিসানাল শিল্প',
+        galTitle: 'বিপিসিএবি শেফদের সৃষ্টিশীল গ্যালারি',
+        conTag: 'যোগাযোগ',
+        conTitle: 'কেন্দ্রীয় সচিবালয় ও তথ্য',
+        lblHq: 'প্রধান কার্যালয়:',
+        lblHotline: 'হটলাইন:',
+        lblEmail: 'ইমেইল:'
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      document.getElementById('txt-ribbon').textContent = t.ribbon;
+      document.getElementById('txt-brand-sub').textContent = t.brandSub;
+      document.getElementById('tab-home').textContent = t.tabHome;
+      document.getElementById('tab-about').textContent = t.tabAbout;
+      document.getElementById('tab-programs').textContent = t.tabPrograms;
+      document.getElementById('tab-membership').textContent = t.tabMembership;
+      document.getElementById('tab-gallery').textContent = t.tabGallery;
+      document.getElementById('tab-contact').textContent = t.tabContact;
+      document.getElementById('btn-header-apply').textContent = t.applyBtn;
+      document.getElementById('txt-menu-label').textContent = t.menuLabel;
+
+      document.getElementById('txt-drawer-lang-title').textContent = t.drawerLangTitle;
+      document.getElementById('txt-drawer-nav-title').textContent = t.drawerNavTitle;
+      document.getElementById('nav-d-home').textContent = t.dHome;
+      document.getElementById('nav-d-about').textContent = t.dAbout;
+      document.getElementById('nav-d-programs').textContent = t.dPrograms;
+      document.getElementById('nav-d-membership').textContent = t.dMembership;
+      document.getElementById('nav-d-gallery').textContent = t.dGallery;
+      document.getElementById('nav-d-contact').textContent = t.dContact;
+
+      document.getElementById('hero-title').innerHTML = t.heroTitle;
+      document.getElementById('hero-desc').textContent = t.heroDesc;
+      document.getElementById('hero-btn-apply').textContent = t.heroApply;
+      document.getElementById('hero-btn-master').textContent = t.heroMaster;
+      document.getElementById('hero-btn-about').textContent = t.heroAbout;
+
+      document.getElementById('txt-pres-tag').textContent = t.presTag;
+      document.getElementById('txt-pres-quote').textContent = t.presQuote;
+      document.getElementById('txt-pres-body').textContent = t.presBody;
+
+      document.getElementById('about-tag').textContent = t.aboutTag;
+      document.getElementById('about-title').textContent = t.aboutTitle;
+      document.getElementById('about-v-title').textContent = t.aboutVTitle;
+      document.getElementById('about-v-desc').textContent = t.aboutVDesc;
+      document.getElementById('about-m-title').textContent = t.aboutMTitle;
+      document.getElementById('about-m-desc').textContent = t.aboutMDesc;
+
+      document.getElementById('prog-tag').textContent = t.progTag;
+      document.getElementById('prog-title').textContent = t.progTitle;
+      document.getElementById('mem-tag').textContent = t.memTag;
+      document.getElementById('mem-title').textContent = t.memTitle;
+      document.getElementById('lbl-name').textContent = t.lblName;
+      document.getElementById('lbl-phone').textContent = t.lblPhone;
+      document.getElementById('lbl-cat').textContent = t.lblCat;
+      document.getElementById('lbl-bakery').textContent = t.lblBakery;
+      document.getElementById('btn-submit-app').textContent = t.submitApp;
+
+      document.getElementById('gal-tag').textContent = t.galTag;
+      document.getElementById('gal-title').textContent = t.galTitle;
+      document.getElementById('con-tag').textContent = t.conTag;
+      document.getElementById('con-title').textContent = t.conTitle;
+      document.getElementById('lbl-hq').textContent = t.lblHq;
+      document.getElementById('lbl-hotline').textContent = t.lblHotline;
+      document.getElementById('lbl-email').textContent = t.lblEmail;
+
+      const btnEn = document.getElementById('langBtnEn');
+      const btnBn = document.getElementById('langBtnBn');
+      if (lang === 'en') {
+        btnEn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border bg-amber-400 text-slate-950 border-amber-300 font-extrabold shadow-md';
+        btnBn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border bg-white/5 hover:bg-white/10 text-slate-300 border-white/10';
+      } else {
+        btnBn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border bg-amber-400 text-slate-950 border-amber-300 font-extrabold shadow-md';
+        btnEn.className = 'py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1 border bg-white/5 hover:bg-white/10 text-slate-300 border-white/10';
+      }
+    }
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('page-' + pageId);
+      if (target) target.classList.add('active');
+
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.className = 'nav-tab px-3.5 py-2 rounded-xl transition text-slate-300 hover:text-white hover:bg-white/5';
+      });
+      const activeTab = document.getElementById('tab-' + pageId);
+      if (activeTab) {
+        activeTab.className = 'nav-tab px-3.5 py-2 rounded-xl transition bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold shadow';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMenu() {
+      const drawer = document.getElementById('drawerMenu');
+      if (drawer.classList.contains('hidden')) {
+        drawer.classList.remove('hidden');
+      } else {
+        drawer.classList.add('hidden');
+      }
+    }
+
+    const DEFAULT_PHOTOS = [
+      { title: 'Artisan French Butter Croissants', category: 'Viennoiserie', image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&auto=format&fit=crop&q=80', chef: 'Chef Kazi Mamun' },
+      { title: 'Multitiered Fondant Wedding Cake', category: 'Cake Art', image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=800&auto=format&fit=crop&q=80', chef: 'Chef Nusrat Jahan' },
+      { title: 'Natural Wild Yeast Sourdough Boule', category: 'Artisan Bread', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80', chef: 'Chef S. M. Farhan' },
+      { title: 'Handcrafted Bonbon Chocolatier', category: 'Chocolatier', image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&auto=format&fit=crop&q=80', chef: 'Chef Aminul Islam' },
+      { title: 'French Strawberry Fraisier Patisserie', category: 'Patisserie', image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=800&auto=format&fit=crop&q=80', chef: 'Chef Sonia Rahman' },
+      { title: 'Golden Pistachio Brioche Loaf', category: 'Viennoiserie', image: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=800&auto=format&fit=crop&q=80', chef: 'Chef Tariqul Islam' }
+    ];
+
+    function renderPublicGallery(items) {
+      const container = document.getElementById('publicGalleryGrid');
+      if (!container) return;
+      container.innerHTML = '';
+      (items && items.length > 0 ? items : DEFAULT_PHOTOS).forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'group rounded-3xl overflow-hidden bg-[#14171e] border border-white/10 hover:border-amber-400/40 transition flex flex-col justify-between shadow-lg';
+        card.innerHTML = `
+          <div class="h-64 relative overflow-hidden bg-slate-900">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            <span class="absolute top-3 left-3 bg-black/80 backdrop-blur text-amber-300 text-[10px] font-extrabold px-3 py-1 rounded-full border border-amber-400/30">
+              ${item.category || 'Pastry'}
+            </span>
+          </div>
+          <div class="p-4 border-t border-white/10 bg-[#121620]">
+            <h4 class="font-extrabold text-white text-sm truncate">${item.title}</h4>
+            <p class="text-xs text-amber-400/80 mt-1">${item.chef || 'BPCAB Master Chef'}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function initGallery() {
+      try {
+        const saved = localStorage.getItem('bpcab_custom_gallery');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            renderPublicGallery(parsed);
+          }
+        }
+      } catch (e) {}
+
+      fetch('gallery.json?t=' + Date.now())
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            renderPublicGallery(data);
+          } else if (!localStorage.getItem('bpcab_custom_gallery')) {
+            renderPublicGallery(DEFAULT_PHOTOS);
+          }
+        })
+        .catch(() => {
+          if (!localStorage.getItem('bpcab_custom_gallery')) {
+            renderPublicGallery(DEFAULT_PHOTOS);
+          }
+        });
+    }
+
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'bpcab_custom_gallery' && e.newValue) {
+        try {
+          renderPublicGallery(JSON.parse(e.newValue));
+        } catch(err) {}
+      }
+    });
+
+    initGallery();
+  </script>
+</body>
+</html>
