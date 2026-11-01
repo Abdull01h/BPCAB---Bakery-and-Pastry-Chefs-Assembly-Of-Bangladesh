@@ -1,1 +1,1 @@
-# BPCAB---Bakery-and-Pastry-Chefs-Assembly-Of-Bangladesh
+# BPCAB - Bakery and Pastry Chefs Assembly Of Bangladesh\n\nOfficial website and admin panel for GitHub Pages.\n- **index.html**: Public Website\n- **admin.html**: Secret Admin Console (PIN: 2019)\n- **config.json**: Live site settings & logo\n- **gallery.json**: Photo showcase data\n
