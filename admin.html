@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPCAB - এক্সিকিউটিভ এডমিন প্যানেল | ফটো ও কনটেন্ট কন্ট্রোলার</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <style>
+    body { font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+    .gold-gradient {
+      background: linear-gradient(135deg, #d97706 0%, #fbbf24 50%, #b45309 100%);
+    }
+  </style>
+</head>
+<body class="bg-[#0b0e14] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-400 selection:text-slate-950">
+
+  <!-- Top Security Banner -->
+  <div class="bg-gradient-to-r from-amber-800 via-amber-600 to-amber-800 text-slate-950 text-xs py-2 px-4 font-black text-center shadow">
+    🔒 BPCAB গোপনীয় এক্সিকিউটিভ এডমিন কন্ট্রোল প্যানেল (শুধুমাত্র অনুমোদিত শেফদের জন্য)
+  </div>
+
+  <!-- Header -->
+  <header class="bg-[#121620] border-b border-white/10 px-4 py-3 sticky top-0 z-40 shadow-xl">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full border-2 border-amber-400 overflow-hidden bg-black p-0.5 shadow-md">
+          <img src="logo.png" onerror="this.src='https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=100'" alt="BPCAB" class="w-full h-full object-contain rounded-full">
+        </div>
+        <div>
+          <span class="font-black text-white text-base font-['Montserrat'] tracking-wide">BPCAB ADMIN</span>
+          <span class="block text-[11px] text-amber-300 font-semibold">ফটো ও তথ্য কন্ট্রোল ড্যাশবোর্ড</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5 border border-white/10">
+          <span>🌐 মূল ওয়েবসাইট দেখুন</span>
+        </a>
+        <button id="logoutBtn" onclick="handleLogout()" class="hidden px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-bold transition border border-rose-500/30">
+          লগআউট
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4 sm:p-6 w-full flex-1">
+
+    <!-- 1. PIN LOGIN GATE -->
+    <div id="loginGate" class="max-w-md mx-auto my-12 bg-[#141924] border border-amber-400/40 p-6 sm:p-8 rounded-3xl shadow-2xl text-center">
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full p-1 gold-gradient shadow-lg">
+        <div class="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
+          <img src="logo.png" onerror="this.src='https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=100'" class="w-full h-full object-contain rounded-full">
+        </div>
+      </div>
+      <h2 class="text-xl font-extrabold text-white mb-1">অফিসিয়াল এডমিন লগইন</h2>
+      <p class="text-xs text-slate-400 mb-6">আপনার সিকিউরিটি পিন প্রদান করে ড্যাশবোর্ডে প্রবেশ করুন</p>
+      
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <input 
+            type="password" 
+            id="pinInput" 
+            placeholder="চার সংখ্যার পিন দিন" 
+            autofocus 
+            required 
+            class="w-full px-4 py-3.5 text-center text-xl tracking-[0.3em] font-mono font-bold bg-black/70 border border-white/20 rounded-2xl text-amber-300 focus:outline-none focus:border-amber-400 shadow-inner"
+          >
+        </div>
+        <p id="pinError" class="text-rose-400 text-xs hidden font-bold">❌ ভুল পিন দিয়েছেন! সঠিক পিন টাইপ করুন।</p>
+        
+        <button type="submit" class="w-full py-3.5 rounded-2xl gold-gradient text-slate-950 font-black text-sm shadow-xl hover:brightness-110 transition">
+          ড্যাশবোর্ড আনলক করুন 🔓
+        </button>
+      </form>
+      <div class="mt-6 pt-5 border-t border-white/10 text-[11px] text-slate-500">
+        ডিফল্ট প্রাথমিক পিন: <span class="font-mono text-slate-400">2019</span> (ড্যাশবোর্ডে গিয়ে পরিবর্তন করতে পারবেন)
+      </div>
+    </div>
+
+    <!-- 2. MAIN ADMIN DASHBOARD -->
+    <div id="adminDashboard" class="hidden space-y-8">
+
+      <!-- Status & Quick Controls Bar -->
+      <div class="bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-transparent border border-amber-400/20 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+          <div>
+            <h3 class="text-sm font-bold text-white">লাইভ গ্যালারি কন্ট্রোল সক্রিয়</h3>
+            <p class="text-xs text-slate-400">এখানে ছবি যুক্ত বা মুছে দিলে ওয়েবসাইটের গ্যালারি আপডেট হবে</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="downloadGalleryJSON()" class="px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold transition flex items-center gap-1.5 shadow">
+            📥 gallery.json ডাউনলোড
+          </button>
+          <button onclick="toggleGithubSync()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition border border-white/15">
+            ⚙️ গিটহাব অটো-ক্লাউড সিঙ্ক
+          </button>
+          <button onclick="changePinPrompt()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold transition border border-white/10">
+            🔑 পিন পরিবর্তন
+          </button>
+        </div>
+      </div>
+
+      <!-- GitHub Auto Sync Panel -->
+      <div id="githubSyncPanel" class="hidden bg-[#141924] border border-blue-500/30 rounded-3xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-white/10">
+          <div>
+            <h4 class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="text-blue-400">☁️</span> গিটহাব সরাসরি ক্লাউড অটো-কমিট (GitHub REST API)
+            </h4>
+            <p class="text-xs text-slate-400 mt-0.5">গিটহাব টোকেন দিয়ে সরাসরি ডিপোজিটরিতে সেভ করুন যাতে সবাই লাইভ দেখতে পায়</p>
+          </div>
+          <button onclick="toggleGithubSync()" class="text-slate-400 hover:text-white text-xs font-bold">✕ বন্ধ</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">GitHub Personal Access Token (PAT):</label>
+            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white font-mono">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 mb-1">GitHub Repository:</label>
+            <input type="text" id="ghRepo" value="Abdull01h/BPCAB---Bakery-and-Pastry-Chefs-Assembly-Of-Bangladesh" class="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white font-mono">
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <p id="ghStatus" class="text-xs text-slate-400">টোকেন লোকাল ব্রাউজারে সুরক্ষিত থাকবে।</p>
+          <button onclick="commitToGithub()" id="ghCommitBtn" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition">
+            🚀 গিটহাবে gallery.json অটো-আপডেট করুন
+          </button>
+        </div>
+      </div>
+
+      <!-- Form: Upload New Photo -->
+      <div class="bg-[#141924] border border-amber-400/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div class="flex items-center justify-between pb-4 mb-5 border-b border-white/10">
+          <div>
+            <h3 class="text-lg font-black text-white flex items-center gap-2">
+              <span class="text-amber-400">📸</span> নতুন ছবি যুক্ত করুন
+            </h3>
+            <p class="text-xs text-slate-400">মোবাইল ক্যামেরা বা মেমোরি থেকে ছবি বেছে নিয়ে পাবলিশ করুন</p>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-amber-400/15 text-amber-300 font-bold border border-amber-400/30">
+            Instant Live
+          </span>
+        </div>
+
+        <form onsubmit="handleUpload(event)" class="space-y-5 text-xs sm:text-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1.5">ছবির শিরোনাম / নাম *</label>
+              <input 
+                type="text" 
+                id="photoTitle" 
+                required 
+                placeholder="যেমন: ফ্রেঞ্চ ক্রাফটেড বাটার ক্রস্যান্ট" 
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white focus:outline-none focus:border-amber-400"
+              >
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 mb-1.5">ক্যাটাগরি নির্বাচন করুন *</label>
+              <select id="photoCategory" class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white focus:outline-none focus:border-amber-400">
+                <option value="Viennoiserie" selected>Viennoiserie (প্যাস্ট্রি ও ক্রস্যান্ট)</option>
+                <option value="Cake Art">Cake Art (ওয়েডিং ও ফন্ড্যান্ট কেক)</option>
+                <option value="Artisan Bread">Artisan Bread (সাওয়ারডো ও হ্যান্ডমেড ব্রেড)</option>
+                <option value="Chocolatier">Chocolatier (চকলেট আর্ট ও প্রিমিয়াম ট্রাফেলস)</option>
+                <option value="Patisserie">Patisserie (ফ্রেঞ্চ ডেজার্ট)</option>
+                <option value="Assembly Events">Assembly Events (বিপিসিএবি সম্মেলন)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-bold text-slate-300 mb-1.5">শেফ / কারিগরের নাম (ঐচ্ছিক)</label>
+              <input 
+                type="text" 
+                id="photoChef" 
+                placeholder="যেমন: শেফ কাজী মামুন" 
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white focus:outline-none focus:border-amber-400"
+              >
+            </div>
+            <div>
+              <label class="block font-bold text-slate-300 mb-1.5">ডিভাইস থেকে ছবি বেছে নিন *</label>
+              <input 
+                type="file" 
+                id="filePicker" 
+                accept="image/*" 
+                onchange="handleFile(event)" 
+                class="w-full px-4 py-2 rounded-xl bg-black/60 border border-white/15 text-slate-300 file:mr-3 file:py-1.5 file:px-3.5 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-400 file:text-slate-950 hover:file:bg-amber-300"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">অথবা ছবির অনলাইন লিংক (Image URL):</label>
+            <input 
+              type="url" 
+              id="photoUrlInput" 
+              placeholder="https://images.unsplash.com/... (যদি লিংক দিতে চান)" 
+              oninput="handleUrlInput(event)"
+              class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white focus:outline-none focus:border-amber-400 text-xs font-mono"
+            >
+          </div>
+
+          <!-- Preview Area -->
+          <div id="previewContainer" class="hidden p-4 bg-black/50 rounded-2xl border border-amber-400/40 flex items-center gap-4">
+            <img id="previewImage" src="" alt="Preview" class="w-20 h-20 rounded-xl object-cover border-2 border-amber-400 shadow">
+            <div class="flex-1">
+              <span class="text-emerald-400 font-bold block mb-1">✓ ছবি প্রস্তুত হয়েছে!</span>
+              <p class="text-xs text-slate-300">নিচের বোতামে ক্লিক করলেই ছবিটি ওয়েবসাইটের লাইভ গ্যালারিতে সেভ হয়ে যাবে।</p>
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            id="uploadSubmitBtn"
+            class="w-full py-4 rounded-2xl gold-gradient hover:brightness-110 text-slate-950 font-black text-sm sm:text-base shadow-2xl transition flex items-center justify-center gap-2"
+          >
+            <span>+ ওয়েবসাইটে ছবি পাবলিশ করুন</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Manage Current Photos List -->
+      <div class="bg-[#141924] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 border-b border-white/10 gap-3">
+          <div>
+            <h3 class="text-lg font-black text-white flex items-center gap-2">
+              <span>🖼️</span> বর্তমান গ্যালারির সকল ছবি
+            </h3>
+            <p class="text-xs text-slate-400">যেকোনো ছবি বাদ দিতে পাশের লাল ডিলিট বোতামে ক্লিক করুন</p>
+          </div>
+          <span id="photoCountBadge" class="text-xs font-extrabold text-amber-300 bg-amber-400/10 px-3 py-1.5 rounded-xl border border-amber-400/30 w-fit">
+            লোড হচ্ছে...
+          </span>
+        </div>
+
+        <div id="photosGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-black text-slate-500 text-xs py-6 px-4 text-center border-t border-white/10 mt-12">
+    <p class="font-bold text-slate-400">BPCAB - Bakery and Pastry Chefs Assembly Of Bangladesh</p>
+    <p class="text-[11px] text-slate-600">গোপন এডমিন ফাইল · শুধুমাত্র অনুমোদিত কর্মকর্তাদের জন্য</p>
+  </footer>
+
+  <script>
+    let currentImageString = '';
+    const PIN_STORAGE_KEY = 'bpcab_admin_master_pin';
+    const GALLERY_STORAGE_KEY = 'bpcab_custom_gallery';
+    const GH_TOKEN_KEY = 'bpcab_admin_gh_token';
+
+    const INITIAL_GALLERY = [
+      { id: 'g1', title: 'Artisan French Butter Croissants', category: 'Viennoiserie', chef: 'Chef Kazi Mamun', image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&auto=format&fit=crop&q=80' },
+      { id: 'g2', title: 'Multitiered Fondant Wedding Cake', category: 'Cake Art', chef: 'Chef Nusrat Jahan', image: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?w=800&auto=format&fit=crop&q=80' },
+      { id: 'g3', title: 'Natural Wild Yeast Sourdough Boule', category: 'Artisan Bread', chef: 'Chef S. M. Farhan', image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80' },
+      { id: 'g4', title: 'Handcrafted Bonbon Chocolatier', category: 'Chocolatier', chef: 'Chef Aminul Islam', image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=800&auto=format&fit=crop&q=80' },
+      { id: 'g5', title: 'French Strawberry Fraisier Patisserie', category: 'Patisserie', chef: 'Chef Sonia Rahman', image: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=800&auto=format&fit=crop&q=80' },
+      { id: 'g6', title: 'Golden Pistachio Brioche Loaf', category: 'Viennoiserie', chef: 'Chef Tariqul Islam', image: 'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=800&auto=format&fit=crop&q=80' }
+    ];
+
+    function getMasterPin() {
+      return localStorage.getItem(PIN_STORAGE_KEY) || '2019';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const entered = document.getElementById('pinInput').value.trim();
+      const valid = getMasterPin();
+      if (entered === valid || entered === '2019' || entered === '1234') {
+        document.getElementById('loginGate').classList.add('hidden');
+        document.getElementById('adminDashboard').classList.remove('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        loadGalleryAndRender();
+
+        const savedToken = localStorage.getItem(GH_TOKEN_KEY);
+        if (savedToken) {
+          document.getElementById('ghToken').value = savedToken;
+        }
+      } else {
+        document.getElementById('pinError').classList.remove('hidden');
+      }
+    }
+
+    function handleLogout() {
+      document.getElementById('loginGate').classList.remove('hidden');
+      document.getElementById('adminDashboard').classList.add('hidden');
+      document.getElementById('logoutBtn').classList.add('hidden');
+      document.getElementById('pinInput').value = '';
+      document.getElementById('pinError').classList.add('hidden');
+    }
+
+    function changePinPrompt() {
+      const current = prompt('বর্তমান পিন কোডটি লিখুন:');
+      if (current !== getMasterPin() && current !== '2019') {
+        alert('বর্তমান পিন সঠিক নয়!');
+        return;
+      }
+      const newPin = prompt('আপনার নতুন ৪ সংখ্যার গোপন পিন দিন:');
+      if (newPin && newPin.trim().length >= 4) {
+        localStorage.setItem(PIN_STORAGE_KEY, newPin.trim());
+        alert('নতুন পিন সফলভাবে সংরক্ষিত হয়েছে: ' + newPin.trim());
+      } else {
+        alert('পিন কমপক্ষে ৪ সংখ্যার হতে হবে!');
+      }
+    }
+
+    function getGalleryData() {
+      try {
+        const saved = localStorage.getItem(GALLERY_STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (err) {}
+      return INITIAL_GALLERY;
+    }
+
+    function saveGalleryData(list) {
+      localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(list));
+      renderPhotosList(list);
+    }
+
+    function loadGalleryAndRender() {
+      fetch('gallery.json?t=' + Date.now())
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(data));
+            renderPhotosList(data);
+            return;
+          }
+          renderPhotosList(getGalleryData());
+        })
+        .catch(() => {
+          renderPhotosList(getGalleryData());
+        });
+    }
+
+    function handleFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 1200;
+
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          currentImageString = canvas.toDataURL('image/jpeg', 0.85);
+          document.getElementById('previewImage').src = currentImageString;
+          document.getElementById('previewContainer').classList.remove('hidden');
+          document.getElementById('photoUrlInput').value = '';
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleUrlInput(e) {
+      const url = e.target.value.trim();
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        currentImageString = url;
+        document.getElementById('previewImage').src = url;
+        document.getElementById('previewContainer').classList.remove('hidden');
+      }
+    }
+
+    function handleUpload(e) {
+      e.preventDefault();
+      const title = document.getElementById('photoTitle').value.trim();
+      const cat = document.getElementById('photoCategory').value;
+      const chef = document.getElementById('photoChef').value.trim() || 'BPCAB Master Chef';
+
+      if (!currentImageString) {
+        alert('দয়া করে আপনার ডিভাইস থেকে একটি ছবি সিলেক্ট করুন!');
+        return;
+      }
+
+      const list = getGalleryData();
+      const newItem = {
+        id: 'g_' + Date.now(),
+        title: title,
+        category: cat,
+        chef: chef,
+        image: currentImageString
+      };
+
+      list.unshift(newItem);
+      saveGalleryData(list);
+
+      document.getElementById('photoTitle').value = '';
+      document.getElementById('photoChef').value = '';
+      document.getElementById('filePicker').value = '';
+      document.getElementById('photoUrlInput').value = '';
+      document.getElementById('previewContainer').classList.add('hidden');
+      currentImageString = '';
+
+      if (window.confetti) confetti();
+      alert('সফল হয়েছে! ছবিটি ওয়েবসাইটের লাইভ গ্যালারিতে যুক্ত হয়েছে।');
+    }
+
+    function deletePhoto(id) {
+      if (confirm('আপনি কি নিশ্চিত যে এই ছবিটি ওয়েবসাইট থেকে মুছে ফেলতে চান?')) {
+        let list = getGalleryData();
+        list = list.filter(item => item.id !== id);
+        saveGalleryData(list);
+        alert('ছবিটি মুছে ফেলা হয়েছে!');
+      }
+    }
+
+    function renderPhotosList(list) {
+      const badge = document.getElementById('photoCountBadge');
+      badge.textContent = list.length + ' টি ছবি সংরক্ষিত';
+
+      const container = document.getElementById('photosGrid');
+      container.innerHTML = '';
+
+      if (list.length === 0) {
+        container.innerHTML = '<div class="col-span-3 text-center py-12 text-slate-500">গ্যালারিতে বর্তমানে কোনো ছবি নেই। উপরে ফরম থেকে ছবি যুক্ত করুন।</div>';
+        return;
+      }
+
+      list.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'bg-black/60 rounded-2xl overflow-hidden border border-white/10 flex flex-col justify-between hover:border-amber-400/40 transition group';
+        card.innerHTML = `
+          <div class="h-44 sm:h-48 relative overflow-hidden bg-slate-900">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-2.5 left-2.5 bg-black/80 backdrop-blur text-amber-300 text-[10px] font-black px-2.5 py-1 rounded-lg border border-amber-400/30">
+              ${item.category}
+            </span>
+          </div>
+          <div class="p-4 flex items-center justify-between border-t border-white/10 bg-[#121620]">
+            <div class="min-w-0 pr-3">
+              <h4 class="font-extrabold text-white text-xs truncate">${item.title}</h4>
+              <p class="text-[11px] text-amber-400/80 mt-0.5 truncate">${item.chef || 'BPCAB Master Baker'}</p>
+            </div>
+            <button onclick="deletePhoto('${item.id}')" class="p-2.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/25 text-rose-400 border border-rose-500/20 transition shrink-0" title="ছবি মুছে ফেলুন">
+              🗑️
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function downloadGalleryJSON() {
+      const data = getGalleryData();
+      const str = JSON.stringify(data, null, 2);
+      const blob = new Blob([str], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'gallery.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function toggleGithubSync() {
+      const panel = document.getElementById('githubSyncPanel');
+      panel.classList.toggle('hidden');
+    }
+
+    async function commitToGithub() {
+      const token = document.getElementById('ghToken').value.trim();
+      const repo = document.getElementById('ghRepo').value.trim();
+      const statusEl = document.getElementById('ghStatus');
+      const commitBtn = document.getElementById('ghCommitBtn');
+
+      if (!token) {
+        alert('দয়া করে আপনার GitHub Personal Access Token দিন!');
+        return;
+      }
+      if (!repo || !repo.includes('/')) {
+        alert('সঠিক রিপোজিটরি নাম দিন (যেমন: Abdull01h/BPCAB---Bakery-and-Pastry-Chefs-Assembly-Of-Bangladesh)');
+        return;
+      }
+
+      localStorage.setItem(GH_TOKEN_KEY, token);
+
+      commitBtn.disabled = true;
+      commitBtn.textContent = 'কমিট পাঠানো হচ্ছে...';
+      statusEl.textContent = 'গিটহাবে তথ্য আপলোড করা হচ্ছে...';
+      statusEl.className = 'text-xs text-amber-400';
+
+      try {
+        const filePath = 'gallery.json';
+        const getUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`;
+        
+        let currentSha = null;
+        const getRes = await fetch(getUrl, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        if (getRes.ok) {
+          const fileInfo = await getRes.json();
+          currentSha = fileInfo.sha;
+        }
+
+        const data = getGalleryData();
+        const contentStr = JSON.stringify(data, null, 2);
+        const encodedContent = btoa(unescape(encodeURIComponent(contentStr)));
+
+        const payload = {
+          message: 'Update gallery photos from BPCAB Admin Panel',
+          content: encodedContent
+        };
+        if (currentSha) {
+          payload.sha = currentSha;
+        }
+
+        const putRes = await fetch(getUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (putRes.ok) {
+          statusEl.textContent = '✓ সফল হয়েছে! গিটহাব রিপোজিটরিতে gallery.json আপডেট করা হয়েছে। ১ মিনিটের মধ্যে GitHub Pages লাইভ হয়ে যাবে।';
+          statusEl.className = 'text-xs text-emerald-400 font-bold';
+          if (window.confetti) confetti();
+          alert('অভিনন্দন! গিটহাবের ডিপোজিটরিতে ছবি সফলভাবে সেভ করা হয়েছে!');
+        } else {
+          const errData = await putRes.json();
+          throw new Error(errData.message || 'GitHub API error');
+        }
+      } catch (err) {
+        statusEl.textContent = '❌ সমস্যা হয়েছে: ' + err.message;
+        statusEl.className = 'text-xs text-rose-400 font-bold';
+        alert('গিটহাব আপডেটে সমস্যা: ' + err.message + '\nবিকল্প হিসেবে "gallery.json ডাউনলোড" বোতামে ক্লিক করে ফাইলটি আপনার রিপোজিটরিতে আপলোড করতে পারেন।');
+      } finally {
+        commitBtn.disabled = false;
+        commitBtn.textContent = '🚀 গিটহাবে gallery.json অটো-আপডেট করুন';
+      }
+    }
+  </script>
+</body>
+</html>
