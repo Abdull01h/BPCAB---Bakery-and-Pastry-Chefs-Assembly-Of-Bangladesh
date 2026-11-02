@@ -1,0 +1,30 @@
+
+name: BPCAB Secure Cloud Sync
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify BPCAB Repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f config.json
+          test -f gallery.json
+          echo "BPCAB required files verified successfully."
+
+      - name: Show sync readiness
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch: $GITHUB_REF_NAME"
+          echo "BPCAB sync verification completed."
